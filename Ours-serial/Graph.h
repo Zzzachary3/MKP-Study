@@ -4,6 +4,7 @@
 #include "Utility.h"
 #include "Timer.h"
 #include "LinearHeap.h"
+#include <vector>
 
 class Graph
 {
@@ -35,6 +36,9 @@ private:
 	char *s_deleted;
 	bool dense_search = false;
 
+	// for python
+	std::vector<ui> kplex;
+
 public:
 	ui best_n_edges = 0;
 	bool first_kplex = true;
@@ -51,6 +55,8 @@ public:
 
 	void search();
 	void search_dense();
+
+	std::vector<ui> get_kplex() {return kplex;}
 
 private:
 	void write_subgraph(ui n, const std::vector<std::pair<ui, ui>> &edge_list);
