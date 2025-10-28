@@ -2,8 +2,7 @@
 double threshold = 1e9;
 Timer thresh, branchings;
 
-#include "Command.h"
-CommandLine cmd;
+// Note: Command.h and cmd are removed, as they belonged to main
 #include "KPlex_BB_matrix.h"
 #include "CTPrune.h"
 #define K_THRESH 10
@@ -12,37 +11,41 @@ using namespace std;
 #include <fstream>
 #include "Utility.h"
 #include "Timer.h"
+#include <string.h> // For memset
+#include <algorithm> // For std::sort, std::max
+#include <set>      // For std::set
+#include <sstream>  // For std::stringstream
 
-#define LEN_LIMIT (1 << 10)
-char filename[LEN_LIMIT];
+// #define LEN_LIMIT (1 << 10)
+// char filename[LEN_LIMIT];
 
-int main(int argc, char *argv[])
-{
-	cmd = CommandLine(argc, argv);
+// int main(int argc, char *argv[])
+// {
+// 	cmd = CommandLine(argc, argv);
 
-	bool dense_search = cmd.GetOptionValue("-dense", "false") == "true";
-	bool verify = cmd.GetOptionValue("-verify", "false") == "true";
+// 	bool dense_search = cmd.GetOptionValue("-dense", "false") == "true";
+// 	bool verify = cmd.GetOptionValue("-verify", "false") == "true";
 
-	printf("\n-----------------------------------------------------------------------------------------\n");
-	strncpy(filename, argv[1], LEN_LIMIT);
-	int k = atoi(argv[2]);
-	Graph *graph = new Graph(filename, k);
-	graph->twoHopG = cmd.GetOptionValue("-twoHopG", "true") == "true";
-	graph->topCTCP = cmd.GetOptionValue("-topCTCP", "true") == "true";
-	graph->read();
+// 	printf("\n-----------------------------------------------------------------------------------------\n");
+// 	strncpy(filename, argv[1], LEN_LIMIT);
+// 	int k = atoi(argv[2]);
+// 	Graph *graph = new Graph(filename, k);
+// 	graph->twoHopG = cmd.GetOptionValue("-twoHopG", "true") == "true";
+// 	graph->topCTCP = cmd.GetOptionValue("-topCTCP", "true") == "true";
+// 	graph->read();
 
-	if (verify)
-	{
-		graph->verify_kplex();
-		return 0;
-	}
-	graph->search();
-	if (dense_search)
-		graph->search_dense();
+// 	if (verify)
+// 	{
+// 		graph->verify_kplex();
+// 		return 0;
+// 	}
+// 	graph->search();
+// 	if (dense_search)
+// 		graph->search_dense();
 
-	// delete graph; // there are some bugs in releasing memory
-	printf("-----------------------------------------------------------------------------------------\n\n");
-}
+// 	// delete graph; // there are some bugs in releasing memory
+// 	printf("-----------------------------------------------------------------------------------------\n\n");
+// }
 
 Graph::Graph(const char *_dir, const int _K)
 {
